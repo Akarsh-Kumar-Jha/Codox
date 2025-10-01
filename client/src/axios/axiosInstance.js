@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3001/api/v1',
+    baseURL: 'https://codox-server-qcsphl48s-akarsh-kumar-jhas-projects.vercel.app/api/v1',
     withCredentials: true,
 });
 
