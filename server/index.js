@@ -88,7 +88,9 @@ socket.on('disconnecting', () => {
 
 });
 
-
+app.use('/',(req,res) => {
+    res.send('<h1>Hello Coders!</h1>');
+})
 app.use('/api/v1',userRoutes);
 
 
