@@ -35,7 +35,7 @@ useEffect(() => {
 }, []);
 
   useEffect(() => {
-    const user_avatar = localStorage.getItem('user-avatar');
+    const user_avatar = localStorage.getItem('user-avatar') || userDetails.avatar;
     const init = async () => {
          if (!user_avatar) {
       naviagate('/login');
