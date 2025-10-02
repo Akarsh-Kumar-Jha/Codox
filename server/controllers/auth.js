@@ -132,7 +132,12 @@ exports.verifyOtp = async(req,res) => {
         const token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:"1d"});
         await redis.del(email);
 
-        res.cookie("token",token,{httpOnly:true,maxAge:24*60*60*1000});
+res.cookie("token", token, {
+  httpOnly: true,
+  maxAge: 24 * 60 * 60 * 1000, // 1 day
+  secure: true,
+  sameSite: "none",
+});
 
         
 
@@ -183,8 +188,12 @@ exports.login = async(req,res) => {
             avatar:userFind.avatar
         };
         const token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:"1d"});
-
-        res.cookie('token',token,{httpOnly:true,maxAge:24*60*60*1000});
+           res.cookie("token", token, {
+  httpOnly: true,
+  maxAge: 24 * 60 * 60 * 1000, // 1 day
+  secure: true,
+  sameSite: "none",
+});
 
         return res.status(200).json({
             success:true,
@@ -256,7 +265,12 @@ exports.signupWithGoogle = async (req, res) => {
 
         const jwtToken = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:"1d"});
         console.log("jwtToken After Google Signup",jwtToken);
-        res.cookie("token",jwtToken,{httpOnly:true,maxAge:24*60*60*1000});
+        res.cookie("token", jwtToken, {
+  httpOnly: true,
+  maxAge: 24 * 60 * 60 * 1000, // 1 day
+  secure: true,
+  sameSite: "none",
+});
 
         return res.status(200).json({
             success: true,
@@ -318,7 +332,13 @@ try {
     }
 
     const jwtToken = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:"1d"});
-    res.cookie("token",jwtToken,{httpOnly:true,maxAge:24*60*60*1000});
+    res.cookie("token", jwtToken, {
+  httpOnly: true,
+  maxAge: 24 * 60 * 60 * 1000, // 1 day
+  secure: true,
+  sameSite: "none",
+});
+
 
     return res.status(200).json({
         success: true,
