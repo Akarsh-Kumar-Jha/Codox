@@ -21,9 +21,11 @@ connectDB();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin : ['http://localhost:3000','https://codoox.netlify.app/'],
-    credentials: true
+  origin: ["https://codoox.netlify.app"], // exactly your Netlify URL
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true
 }));
+app.options("*", cors());
 let redis;
 (async() => {
     redis = await connectRedis()
