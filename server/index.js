@@ -20,7 +20,7 @@ connectDB();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: ["https://codoox.netlify.app"], // exactly your Netlify URL
+  origin: ["https://codoox.netlify.app"],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));
@@ -88,10 +88,6 @@ socket.on('disconnecting', () => {
 });
 
 });
-
-app.use('/',(req,res) => {
-    res.send('<h1>Hello Coders!</h1>');
-})
 app.use('/api/v1',userRoutes);
 
 const PORT = process.env.PORT || 5000;
