@@ -89,6 +89,9 @@ socket.on('disconnecting', () => {
 
 });
 app.use('/api/v1',userRoutes);
+app.use('/',(req,res) => {
+    res.send("Server is running...");
+})
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
