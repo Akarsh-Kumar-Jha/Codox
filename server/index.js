@@ -9,6 +9,7 @@ const userRoutes = require('./routes/userRoutes');
 const router = require('./routes/userRoutes');
 const cors = require('cors');  
 const cookieParser = require('cookie-parser');
+const serverless = require("serverless-http");
 require('dotenv').config();
 const io = new Server(server,{
     cors: {
@@ -93,7 +94,5 @@ app.use('/',(req,res) => {
 })
 app.use('/api/v1',userRoutes);
 
-
-server.listen(3001, () => {
-    console.log('listening on *:3001');
-});
+module.exports = app;
+module.exports.handler = serverless(app);
