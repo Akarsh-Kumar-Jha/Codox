@@ -84,8 +84,9 @@ socket.on('disconnecting', () => {
     rooms.forEach((room) => {
         const clientsOfRoom = Array.from(io.sockets.adapter.rooms.get(room) || []);
         const connectedClientsData = getAllConnectedClients(room);
-        io.to(room).emit('connected-clients',connectedClientsData);
+        console.log("User Getting Disconnected:",userMap[socket.id],"Now Room Conected Clients:",connectedClientsData);
          socket.to(room).emit('user-disconnected', userMap[socket.id]);
+         io.to(room).emit('connected-clients',connectedClientsData);
     })
 });
 
