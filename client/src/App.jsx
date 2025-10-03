@@ -8,6 +8,7 @@ import Signup from './pages/Signup';
 import Editor from './pages/Editor';
 import RoomInfo from './pages/RoomInfo';
 import axiosInstance from './axios/axiosInstance';
+import VerifyOtp from './pages/VerifyOtp';
 export default function App() {
   const [userDetails, setUserDetails] = useState({});
 
@@ -48,6 +49,7 @@ fetchUser();
     <Route path='/signup' element={<Signup userDetails={userDetails} setUserDetails={setUserDetails} />} />
     <Route path='/editor/:roomId' element={<Editor userDetails={userDetails}/>} />
     <Route path='/room-info' element={<RoomInfo/>} />
+    <Route path='/verify-otp' element={<VerifyOtp/>} />
   </Routes>
 
     </div>
