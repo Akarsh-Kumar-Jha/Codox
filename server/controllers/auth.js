@@ -145,6 +145,7 @@ res.cookie("token", token, {
             success: true,
             message: "Otp verified successfully And Account Created Successfully",
             newUser,
+            userFind,
             token
         });
 }catch(error){

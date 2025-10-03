@@ -49,7 +49,7 @@ fetchUser();
     <Route path='/signup' element={<Signup userDetails={userDetails} setUserDetails={setUserDetails} />} />
     <Route path='/editor/:roomId' element={<Editor userDetails={userDetails}/>} />
     <Route path='/room-info' element={<RoomInfo/>} />
-    <Route path='/verify-otp' element={<VerifyOtp/>} />
+    <Route path='/verify-otp' element={<VerifyOtp setUserDetails={setUserDetails} />} />
   </Routes>
 
     </div>

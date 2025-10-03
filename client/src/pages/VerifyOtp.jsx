@@ -1,9 +1,19 @@
+import axios from "axios";
 import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-function VerifyOtp() {
+function VerifyOtp({setUserDetails}) {
   const [otp, setOtp] = useState(new Array(5).fill(""));
   const inputRefs = useRef([]);
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    inputRefs.current[0].focus();
+  }, []);
+
+  const email = useNavigate().location.state.email
+  console.log("email",email);
 
   const handleChange = (event, index) => {
     const value = event.target.value.replace(/\D/, ""); // only digits
@@ -37,6 +47,22 @@ function VerifyOtp() {
 
     setOtp(new Array(5).fill(""));
     inputRefs.current[0].focus();
+    try {
+        const response = axiosInstance.post("/verify-otp", {email,otp:finalOtp});
+        console.log("response after sending otp",response);
+            const userDetails = {
+          username:response.data.userFind.username,
+          email:response.data.userFind.email,
+          avatar:response.data.userFind.avatar
+        }
+        setUserDetails(userDetails);
+        navigate('/room-info');
+         toast.success("Otp Verified Successfully");
+    } catch (error) {
+         console.error("Error In Signup",error.response.data.message);
+        toast.error(error?.response?.data?.message||'Error While Signup');
+        return;
+    }
   };
 
   return (
@@ -44,7 +70,7 @@ function VerifyOtp() {
       <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl shadow-2xl p-10 w-[90%] max-w-md">
         <h2 className="text-3xl font-bold text-center text-white mb-6">
           Verify OTP
-        </h2>
+        </h2>ost
 
         {/* OTP Inputs */}
         <div className="flex justify-center gap-4 mb-6">

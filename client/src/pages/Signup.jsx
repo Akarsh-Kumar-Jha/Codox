@@ -59,6 +59,7 @@ const handleError = (error) => {
     console.log("response after sending otp",response);
     toast.success("Otp Sent Successfully");
     setApicalled(false);
+    navigate('/verify-otp',{state:{email}});
     }catch(error){
       console.log("error",error.response.data.message);
       toast.error(error?.response?.data?.message||"Some Error Occuered");
