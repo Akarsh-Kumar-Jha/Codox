@@ -161,46 +161,36 @@ reactNavigator('/');
     }
   };
 
-  const handleCodeAPiCall = async () => {
-    setOutput('Running...');
-    const options = {
-      method: 'POST',
-      url: 'https://judge0-ce.p.rapidapi.com/submissions',
-      params: { base64_encoded: 'true', wait: 'false', fields: '*' },
-      headers: {
-        'x-rapidapi-key': '573d4e3d04mshad51e3c5761e080p1b1879jsnca58502e1c32',
-        'x-rapidapi-host': 'judge0-ce.p.rapidapi.com',
-        'Content-Type': 'application/json'
-      },
-      data: {
-        language_id: selectedLanguage === 'python' ? 70 : selectedLanguage === 'java' ? 91 : 63,
-        source_code: btoa(code),
-        stdin: btoa('Judge0')
+ const handleCodeAPiCall = async () => {
+
+const options = {
+  method: 'POST',
+  url: 'https://onecompiler-apis.p.rapidapi.com/api/v1/run',
+  headers: {
+    'x-rapidapi-key': '573d4e3d04mshad51e3c5761e080p1b1879jsnca58502e1c32',
+    'x-rapidapi-host': 'onecompiler-apis.p.rapidapi.com',
+    'Content-Type': 'application/json'
+  },
+  data: {
+    language: selectedLanguage,
+    stdin: 'Peter',
+    files: [
+      {
+        name: selectedLanguage === 'python' ? 'main.py' : selectedLanguage === 'java' ? 'Main.java' : 'main.js',
+        content: code
       }
-    };
+    ]
+  }
+};
 
-    try {
-      const response = await axios.request(options);
-      const token = response.data.token;
-      let result = null;
-      do {
-        await new Promise(r => setTimeout(r, 1000));
-        const res = await axios.get(`https://judge0-ce.p.rapidapi.com/submissions/${token}`, {
-          params: { base64_encoded: 'true', fields: '*' },
-          headers: {
-            'x-rapidapi-key': '573d4e3d04mshad51e3c5761e080p1b1879jsnca58502e1c32',
-            'x-rapidapi-host': 'judge0-ce.p.rapidapi.com'
-          }
-        });
-        result = res.data;
-      } while (result.status.id <= 2);
-
-      const out = result.stdout ? atob(result.stdout) : '';
-      const err = result.stderr ? atob(result.stderr) : '';
-      setOutput(out || err || 'No output');
-    } catch (err) {
-      setOutput(err?.response?.data?.stderr || 'Something went wrong...');
-    }
+try {
+	const response = await axios.request(options);
+	console.log(response.data);
+  setOutput(response?.data?.stdout||response?.data?.stderr||response?.data?.exception||'Error While Running Code');
+} catch (error) {
+	console.error(error);
+  setOutput(response?.data?.stderr||response?.data?.exception||'Something Went Wrong While Running Code');
+}
   };
   function handleCodeChange(value){
     console.log("code changed...",value);
