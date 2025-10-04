@@ -65,12 +65,13 @@ socketRef.current.on('connected-clients', (connectedClientsData) => {
   setConnectedClients(connectedClientsData);
 });
  globalThis.emitLanguageChange = function(lang) {
-   socketRef.current.emit('lang-change', lang);
+   socketRef.current.emit('lang-change', {lang,roomId});
  }
 
  socketRef.current.on('language-changed', (lang) => {
    console.log('Language changed to:', lang);
    setSelectedLanguage(lang);
+   localStorage.setItem('lang', lang);
  });
 
  socketRef.current.on('code-updated', (code) => {
@@ -99,7 +100,7 @@ socketRef.current.on('connect_failed', (err) => handleErrors(err));
 function handleErrors(e) {
 console.log('socket error', e);
 toast.error('Socket connection failed, try again later.',{
-   toastId: toastId
+  duration: 3000
 });
 reactNavigator('/');
             }

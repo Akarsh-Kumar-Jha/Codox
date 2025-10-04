@@ -66,16 +66,16 @@ io.on('connection', (socket) => {
        io.to(roomId).emit('connected-clients',connectedClientsData);
     })
 
-    socket.on('lang-change', (lang) => {
+    socket.on('lang-change', ({lang,roomId}) => {
         console.log("Language changed to:", lang);
-        socket.broadcast.emit('language-changed', lang);
+        socket.to(roomId).emit('language-changed', lang);
     });
 
 
     socket.on('code-change', async({value,roomId}) => {
         console.log("Code changed to:", value);
         await redis.set(roomId, value);
-         socket.broadcast.emit('code-updated', value);
+         socket.to(roomId).emit('code-updated', value);
     });
 
 

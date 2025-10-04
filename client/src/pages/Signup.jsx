@@ -48,13 +48,13 @@ const handleError = (error) => {
 
   const handleSignup = async(event) => {
     event.preventDefault();
-    setApicalled(true);
     if(!name || !email || !password || !selectedAvatar){
       toast.error("Please fill all the fields");
       return;
     }
     console.log("name",name,"email",email,"password",password,"avatar",selectedAvatar);
     try{
+       setApicalled(true);
     const response = await axiosInstance.post("/send-otp", {name, email, password, avatar: selectedAvatar});
     console.log("response after sending otp",response);
     toast.success("Otp Sent Successfully");

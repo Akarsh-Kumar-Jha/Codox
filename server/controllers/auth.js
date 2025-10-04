@@ -58,7 +58,7 @@ exports.sendOtp = async(req,res) => {
         if(!mailResponse){
             return res.status(500).json({
                 success: false,
-                message: "Error in sending mail"
+                message: "Error in sending mail",
             });
         }
 
